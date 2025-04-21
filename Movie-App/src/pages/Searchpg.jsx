@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Search from "../components/Search";
+import Spinner from "../components/Spinner";
 
 const VID_MOVIES_API_BASE_URL_ = "https://player.vidsrc.co/embed/movie/";
 const VID_TV_API_BASE_URL_ = "https://player.vidsrc.co/embed/tv/";
@@ -46,12 +47,10 @@ const Searchpg = () => {
     } catch (error) {
       console.error(`Error fetching TMDB MOVIE DATA ${error}`);
     } finally {
-      setIsLoading('False');
+      setIsLoading(false);
     }
-
-   
   };
-  
+
   useEffect(() => {
     fetchMedia();
   }, []);
@@ -59,7 +58,27 @@ const Searchpg = () => {
   return (
     <main>
       <div className="wrapper">
-        <Search />
+        <header>
+          <Search />
+        </header>
+
+        <section className="all-movies">
+          <h2>Xplore Today's Trending Titles</h2>
+
+          {isLoading ? (
+           <Spinner />
+          ) : errorMsg ? (
+            <p className="text-red-400">{errorMsg}</p>
+          ) : (
+            <ul>
+              {movieList.map((movie) => (
+                <p key={"movieId"} className="text-white">
+                  {movie.title}
+                </p>
+              ))}
+            </ul>
+          )}
+        </section>
       </div>
     </main>
   );
