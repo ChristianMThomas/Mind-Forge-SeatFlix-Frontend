@@ -6,19 +6,19 @@ const Navbar = () => {
     <div className="flex flex-row">
 
 
-        <div className=" flex flex-row justify-start w-1/2 p-5 text-2xl text-white ">Logo
+        <div className=" flex flex-row justify-start  align-middle w-1/3 p-5 text-2xl text-white ">
+          <img className="rounded-3xl" src="Logo_App.jpg" alt="Logo image" />
         </div>
 
-        <div className=" flex flex-row justify-around w-1/2 p-7 text-2xl text-white ">
+        <div className=" flex flex-row justify-around w-2/3 p-7 text-2xl text-white">
         <Link to={"/"}>
-          <button>Home</button>
+          <button className=" hover:text-amber-200  transition ease-in-out duration-200">Home</button>
         </Link>
         <Link to={"/Search"}>
-          <button>Search</button>
+          <button className=" hover:text-amber-200  transition ease-in-out duration-200">Search</button>
         </Link>
-        <Link to={"/Watch"}>
-          <button>Watch</button>
-        </Link>
+        
+
         </div>
 
     </div>

@@ -1,14 +1,8 @@
 import React, { useEffect, useState } from "react";
-import Search from "../components/Search";
 
 const Homepg = () => {
     
-    const[searchTerm, setSearchTerm ] = useState('');
-
-
    
-
-
 
 
   return (
@@ -16,14 +10,13 @@ const Homepg = () => {
       <div className="pattern" />
       <div className="wrapper">
       <header>
-        <div className="text-5xl text-white text-center  mt-25">
-          Mind-Forge ||  Xplorer
-        </div>
+          <h2 className="text-5xl text-white text-center  m-20"> Mind-Forge || SeatFlix </h2>
+          <img src="hero-img.png" />
       </header>
 
-      <Search searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
+    
 
-      <div className="w-1/2 ml-auto mr-auto mt-50 text-white text-xl text-center">
+      <div className="w-2/3 ml-auto mr-auto mt-50 text-white text-xl text-center">
         <p>
           Your Safety, Our Priority At Mind-Forge,  we are committed to
           providing a safe and trustworthy streaming experience. Your privacy
