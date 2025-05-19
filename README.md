@@ -15,10 +15,3 @@ Mind-Forge-MovieApp is a **free streaming website** built with **React** and pow
 - **Frontend:** React, Tailwind CSS
 - **Backend:** Appwrite (Database, Authentication, Storage)
 
-
-## Installation & Setup
-Follow these steps to set up the project locally:
-
-1. Clone the repository:
-   ```sh
-   git clone https://github.com/your-username/Mind-Forge-MovieApp.git
