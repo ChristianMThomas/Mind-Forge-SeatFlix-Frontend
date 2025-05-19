@@ -1,8 +1,8 @@
-# Mind-Forge-MovieApp
- (Now known as SeatFlix)
+# Mind-Forge-SeatFlix
+
 
 ## Overview
-Mind-Forge-MovieApp is a **free streaming website** built with **React** and powered by **Appwrite** for backend storage and data management. Users can explore and stream a variety of movies with a seamless UI and robust performance.
+Mind-Forge-SeatFlix is a **free streaming website** built with **React** and powered by **Appwrite** for backend storage and data management. Users can explore and stream a variety of movies with a seamless UI and robust performance.
 
 ## Features
 - 🎬 **Stream movies** for free.
