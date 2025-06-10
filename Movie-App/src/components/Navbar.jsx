@@ -17,6 +17,10 @@ const Navbar = () => {
         <Link to={"/Search"}>
           <button className=" hover:text-amber-200  transition ease-in-out duration-200">Search</button>
         </Link>
+        <Link to={"/Login"}>
+          <button className=" hover:text-amber-200  transition ease-in-out duration-200">Login</button>
+        </Link>
+        
         
 
         </div>
