@@ -1,25 +1,34 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
+
+
 import axios from "axios";
 
 const Login = () => {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const navigate = useNavigate();
+     const { login } = useAuth();
+
+
 
     const handleLogin = async (e) => {
         e.preventDefault(); // Prevent page reload
 
         try {
-            const response = await axios.post("http://localhost:8080/api/v1/users/login", {
-                username,
-                password,
-            });
+             console.log("Sending login request:", username, password);
+            const response = await axios.post("http://localhost:8080/api/v1/users/login", 
+                {username, password },
+            { headers: { "Content-Type": "application/json" } });
+            
 
             if (response.status === 200) {
                 localStorage.setItem("token", response.data.token); // Store JWT token if using JWT
                 alert("Login successful!");
-                navigate("/"); // Redirect to home page after login
+                login(); // update auth context
+                navigate("/home");
+
             }
 
             else if (response.status === 401 ) {
@@ -33,7 +42,9 @@ const Login = () => {
             console.log(response.status);
         } catch (error) {
             alert("Invalid credentials. Please try again.");
+            console.error(error);
         }
+       
     };
 
     return (
@@ -75,7 +86,7 @@ const Login = () => {
                 <h6 className="text-sm hover:underline"> <a href="#">Forgot Password?</a></h6> 
                 </div>
 
-                <button type="submit" className="bg-black text-white text-lg w-4/5 mx-auto my-3 rounded-lg ">Login</button>
+                <button type="submit" className=" hover:bg-gray-500 bg-black text-white text-lg w-4/5 mx-auto my-3 rounded-lg ">Login</button>
 
                 <h6 className="text-center text-sm"><a href="/register" className="font-light italic hover:text-amber-400">First time here? Register today!</a></h6>
                 
