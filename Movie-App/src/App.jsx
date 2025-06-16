@@ -8,6 +8,8 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import { AuthProvider } from "./context/AuthContext";
 import ProtectedRoute from "./components/ProtectedRoute";
+import Profile from "./pages/Profiles";
+
 
 
 
@@ -22,8 +24,8 @@ const App = () => {
         
         <Route path="/" element={<Login />} />
           <Route path="/login" element={<Login />} />
-          <Route element={<Layout />}>
           <Route path="/register" element={<Register />} />
+           <Route element={<Layout />}>
           <Route
             path="/home"
             element={
@@ -45,6 +47,14 @@ const App = () => {
             element={
               <ProtectedRoute>
                 <Watchpg />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/Profile"
+            element={
+              <ProtectedRoute>
+                <Profile />
               </ProtectedRoute>
             }
           />

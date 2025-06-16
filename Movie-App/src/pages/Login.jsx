@@ -1,15 +1,13 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
-
-
 import axios from "axios";
 
 const Login = () => {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const navigate = useNavigate();
-     const { login } = useAuth();
+    const { login } = useAuth();
 
 
 
@@ -17,14 +15,17 @@ const Login = () => {
         e.preventDefault(); // Prevent page reload
 
         try {
-             console.log("Sending login request:", username, password);
+            console.log("Sending login request:", username, password);
             const response = await axios.post("http://localhost:8080/api/v1/users/login", 
-                {username, password },
+            {username, password },
             { headers: { "Content-Type": "application/json" } });
             
 
             if (response.status === 200) {
                 localStorage.setItem("token", response.data.token); // Store JWT token if using JWT
+                localStorage.setItem("userId", response.data.userId);
+                console.log(response.data.userId);
+
                 alert("Login successful!");
                 login(); // update auth context
                 navigate("/home");
