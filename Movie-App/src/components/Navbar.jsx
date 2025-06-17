@@ -37,7 +37,7 @@ const Navbar = () => {
         </Link>
 
         <Link to={"/Profile"}>
-          <img width={40} height={50} src="user.png" className="hover:cursor-pointer translate-y-1.5" title="View Profile"/>
+          <img width={40} height={50} src="user.png " className="hover:cursor-pointer translate-y-1.5" title="View Profile"/>
         </Link>
 
 

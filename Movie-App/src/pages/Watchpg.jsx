@@ -12,8 +12,8 @@ const Watchpg = () => {
 
   return (
     <div className="text-white text-center mt-24">
-      <p className="text-yellow-400 m-5 text-3xl">Sorry about ads 😢</p>
-      <p className="text-yellow-400 m-5 text-3xl">If video doesn't load refresh page</p>
+      <p className="text-yellow-400 m-5 text-3xl">Movie not loading?</p>
+      <p className="text-yellow-400 m-5 text-3xl">Disable Ad-Blocker & try again!</p>
       {loading && <p className="text-center text-lg">Loading movie...</p>}
       <main className="w-3/4 text-center m-auto">
         <iframe
