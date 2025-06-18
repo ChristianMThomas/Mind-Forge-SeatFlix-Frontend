@@ -4,11 +4,28 @@ import { useAuth } from "../context/AuthContext";
 import axios from "axios";
 import { endpoints } from "../api";
 
+
+
+
+
 const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
   const { login } = useAuth();
+
+  const getWhoAmI = async () => {
+  try {
+    const response = await axios.get("https://mind-forge-cthomas.com/api/v1/users/whoami", {
+      withCredentials: true, // 👈 Ensures cookies are sent
+    });
+    console.log("Logged-in user:", response.data);
+  } catch (error) {
+    console.error("Error fetching user:", error.response ? error.response.data : error.message);
+  }
+};
+
+
 
   const handleLogin = async (e) => {
     e.preventDefault(); // Prevent page reload
@@ -16,7 +33,7 @@ const Login = () => {
     try {
       const response = await axios.post(
         endpoints.login,
-        { username, password },
+        { username, password },  
         {
           withCredentials: true,
           headers: { "Content-Type": "application/json" },
@@ -30,6 +47,7 @@ const Login = () => {
 
         alert("Login successful!");
         login(); // update auth context
+        getWhoAmI();
         navigate("/home");
       } else if (response.status === 401) {
         alert("Unauthorized HTTP Response!");
