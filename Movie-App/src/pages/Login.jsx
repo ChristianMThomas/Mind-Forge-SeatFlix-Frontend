@@ -35,8 +35,12 @@ const Login = () => {
         localStorage.setItem("userId", response.data.userId);
         login();
         navigate("/home");
-      } else {
+      } else if (response.status === 401){
+        
         setError("Login failed. Please check your credentials.");
+      }
+      else{
+        setError("Please try again. An error occured on our end.")
       }
     } catch (err) {
       setError("An error occurred. Please try again later.");
