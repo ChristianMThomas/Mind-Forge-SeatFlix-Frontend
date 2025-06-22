@@ -10,57 +10,50 @@ import { AuthProvider } from "./context/AuthContext";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Profile from "./pages/Profiles";
 
-
-
-
-
 const App = () => {
   return (
-
-  
- <AuthProvider>
-    <Router>
-      <Routes>
-        
-        <Route path="/" element={<Login />} />
+    <AuthProvider>
+      <Router>
+        <Routes>
+          <Route path="/" element={<Login />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
-           <Route element={<Layout />}>
-          <Route
-            path="/home"
-            element={
-              <ProtectedRoute>
-                <Homepg />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/Search"
-            element={
-              <ProtectedRoute>
-                <Searchpg />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/Watch/:id"
-            element={
-              <ProtectedRoute>
-                <Watchpg />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/Profile"
-            element={
-              <ProtectedRoute>
-                <Profile />
-              </ProtectedRoute>
-            }
-          />
-        </Route>
-      </Routes>
-    </Router>
+          <Route element={<Layout />}>
+            <Route
+              path="/home"
+              element={
+                <ProtectedRoute>
+                  <Homepg />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/Search"
+              element={
+                <ProtectedRoute>
+                  <Searchpg />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/Watch/:id"
+              element={
+                <ProtectedRoute>
+                  <Watchpg />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/Profile"
+              element={
+                <ProtectedRoute>
+                  <Profile />
+                </ProtectedRoute>
+              }
+            />
+          </Route>
+        </Routes>
+      </Router>
     </AuthProvider>
   );
 };

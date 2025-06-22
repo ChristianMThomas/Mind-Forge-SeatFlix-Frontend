@@ -1,44 +1,35 @@
-import { useAuth } from "../context/AuthContext";
-import { useEffect, useState } from "react";
-import { useRef } from "react";
+import { useEffect, useState, useRef } from "react";
 import axios from "axios";
+import { useAuth } from "../context/AuthContext";
 import { endpoints } from "../api";
 
 function Profile() {
   const { logout } = useAuth();
   const [user, setUser] = useState(null);
+  const [avatarPreview, setAvatarPreview] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [avatarPreview, setAvatarPreview] = useState(null);
   const fileInputRef = useRef();
-  const [showResetMessage, setShowResetMessage] = useState(false);
 
   useEffect(() => {
     const userId = localStorage.getItem("userId");
     if (!userId) {
-      setError("User ID not found in storage.");
+      setError("User ID not found.");
       setLoading(false);
       return;
     }
 
-    fetch(`${endpoints.getUser}/${userId}`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      credentials: "include", // if your backend uses cookies
-    })
-      // Dynamically fetch the logged-in user
-      .then((response) => {
-        if (!response.ok) throw new Error("Failed to fetch user data");
-        return response.json();
+    axios
+      .get(`${endpoints.getUser}/${userId}`, {
+        withCredentials: true,
       })
-      .then((data) => {
-        setUser(data);
+      .then((res) => {
+        setUser(res.data);
         setLoading(false);
       })
       .catch((err) => {
-        setError(err.message);
+        console.error("Error fetching user:", err);
+        setError("Failed to load profile data");
         setLoading(false);
       });
   }, []);
@@ -47,29 +38,27 @@ function Profile() {
     const file = e.target.files[0];
     if (!file) return;
 
-    setAvatarPreview(URL.createObjectURL(file)); // Show preview immediately
-
+    setAvatarPreview(URL.createObjectURL(file));
     const formData = new FormData();
     formData.append("file", file);
 
     try {
-      const response = await axios.post(`${endpoints.uploadAvatar}`, formData, {
-        withCredentials: true, // ✅ Critical for cookie-based sessions
+      const res = await axios.post(`${endpoints.uploadAvatar}`, formData, {
+        withCredentials: true,
         headers: {
           "Content-Type": "multipart/form-data",
         },
       });
-
-      const data = response.data;
-      setUser(data);
-    } catch (error) {
-      console.error(
-        "Upload error details:",
-        error.response?.data || error.message
-      );
-      alert("Avatar upload failed. Please try again.");
+      setUser(res.data);
+      setAvatarPreview(null);
+    } catch (err) {
+      console.error("Upload failed:", err.response?.data || err.message);
+      setError("Avatar upload failed. Please try again.");
     }
   };
+
+  if (loading) return <div>Loading profile...</div>;
+  if (error) return <div className="text-red-500">{error}</div>;
 
   return (
     <div className="text-white w-9/12 mx-auto my-auto h-auto rounded-lg border bg-gray-800 shadow-md p-6">
@@ -122,19 +111,9 @@ function Profile() {
               {user.dateJoined || "N/A"}
             </p>
 
-            <button
-              className="px-4  mr-5 py-2 bg-blue-500 hover:bg-blue-600 rounded-lg text-white"
-              onClick={() => setShowResetMessage(true)}
-            >
+            <button className="px-4  mr-5 py-2 bg-blue-500 hover:bg-blue-600 rounded-lg text-white">
               Reset Password
             </button>
-
-            {showResetMessage && (
-              <p style={{ color: "red", margin: "1rem" }}>
-                🔐We are sorry, Reset password feature is still in development.
-                Please email us for further help!
-              </p>
-            )}
 
             <button
               onClick={logout}

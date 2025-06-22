@@ -4,61 +4,45 @@ import { useAuth } from "../context/AuthContext";
 import axios from "axios";
 import { endpoints } from "../api";
 
-
-
-
-
 const Login = () => {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+  const [credentials, setCredentials] = useState({
+    username: "",
+    password: "",
+  });
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
   const navigate = useNavigate();
   const { login } = useAuth();
 
-  const getWhoAmI = async () => {
-  try {
-    const response = await axios.get("https://mind-forge-cthomas.com/api/v1/users/whoami", {
-      withCredentials: true, // 👈 Ensures cookies are sent
-    });
-    console.log("Logged-in user:", response.data);
-  } catch (error) {
-    console.error("Error fetching user:", error.response ? error.response.data : error.message);
-  }
-};
-
-
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setCredentials((prev) => ({ ...prev, [name]: value }));
+  };
 
   const handleLogin = async (e) => {
-    e.preventDefault(); // Prevent page reload
+    e.preventDefault();
+    setLoading(true);
+    setError(null);
 
     try {
-      const response = await axios.post(
-        endpoints.login,
-        { username, password },  
-        {
-          withCredentials: true,
-          headers: { "Content-Type": "application/json" },
-        }
-      );
+      const response = await axios.post(endpoints.login, credentials, {
+        withCredentials: true,
+        headers: { "Content-Type": "application/json" },
+      });
 
       if (response.status === 200) {
-        localStorage.setItem("token", response.data.token); // Store JWT token if using JWT
+        localStorage.setItem("token", response.data.token);
         localStorage.setItem("userId", response.data.userId);
-        console.log(response.data.userId);
-
-        alert("Login successful!");
-        login(); // update auth context
-        getWhoAmI();
+        login();
         navigate("/home");
-      } else if (response.status === 401) {
-        alert("Unauthorized HTTP Response!");
-      } else if (response.status === 403) {
-        alert("Forbidden!");
+      } else {
+        setError("Login failed. Please check your credentials.");
       }
-
-      console.log(response.status);
-    } catch (error) {
-      alert("Invalid credentials. Please try again.");
-      console.error(error);
+    } catch (err) {
+      setError("An error occurred. Please try again later.");
+      console.error(err);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -83,8 +67,9 @@ const Login = () => {
           <input
             type="text"
             placeholder="Username"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
+            name="username"
+            value={credentials.username}
+            onChange={handleChange}
             required
             className="border-1 rounded-lg w-5/6 mx-auto mt-5 text-xl font-serif"
           />
@@ -92,8 +77,9 @@ const Login = () => {
           <input
             type="password"
             placeholder="Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            name="password"
+            value={credentials.password}
+            onChange={handleChange}
             required
             className="border-1 rounded-lg w-5/6 mx-auto my-3 text-xl font-serif"
           />
@@ -115,6 +101,8 @@ const Login = () => {
           >
             Login
           </button>
+
+           {error && <p className="error-message">{error}</p>}
 
           <h6 className="text-center text-sm">
             <a

@@ -1,3 +1,9 @@
+import axios from "axios";
+
+
+axios.defaults.withCredentials = true; // 🔒 Always include cookies in requests
+axios.defaults.baseURL = "https://mindforge-seatflix-backend-production.up.railway.app"; // or your backend domain
+
 const API_BASE_URL = import.meta.env.VITE_SEATFLIX_API_URL;
 
 export const endpoints = {
@@ -5,6 +11,7 @@ export const endpoints = {
   login: `${API_BASE_URL}/api/v1/users/login`,
   uploadAvatar: `${API_BASE_URL}/api/v1/users/upload-avatar`,
   getUser: `${API_BASE_URL}/api/v1/users`,
+
  
 
   // Add more endpoints as you build them
