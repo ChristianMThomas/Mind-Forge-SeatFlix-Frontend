@@ -13,5 +13,5 @@ Mind-Forge-SeatFlix is a **free streaming website** built with **React** and pow
 
 ## Tech Stack
 - **Frontend:** React, Tailwind CSS
-- **Backend:** Appwrite (Database, Authentication, Storage)
+- **Backend:** Appwrite, SpringBoot (Database, Authentication, Storage)
 
